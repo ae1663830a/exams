@@ -16,12 +16,11 @@ public class PhilatelistImpl implements Philatelist {
 
     @Override
     public void addToCollection(PostStamp postStamp) {
-        PostStamp exists = postStampArrayList.stream().filter(postStamp1 -> postStamp1.getName().equals(postStamp.getName())).findAny().orElse(null);
         if (postStamp == null) {
             throw new IllegalArgumentException();
         } else if (postStamp.getName() == null || postStamp.getName().equals("")) {
             throw new IllegalArgumentException();
-        } else if (exists == null) {
+        } else if (!postStampArrayList.contains(postStamp)) {
             postStampArrayList.add(postStamp);
         }
     }
@@ -34,6 +33,7 @@ public class PhilatelistImpl implements Philatelist {
     @Override
     public double getAveragePostStampPrice() {
         if (postStampArrayList.size() > 0) {
+            System.out.println(postStampArrayList.size());
             return postStampArrayList.stream().mapToDouble(PostStamp::getMarketPrice).average().getAsDouble();
         }
         return 0.0;
@@ -41,6 +41,8 @@ public class PhilatelistImpl implements Philatelist {
 
     @Override
     public int getNumberOfPostStampsInCollection() {
+        System.out.println(postStampArrayList.size());
         return postStampArrayList.size();
     }
 }
+
